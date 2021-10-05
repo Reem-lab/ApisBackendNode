@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+</head>
+<body>
+    <!--
+        Creating  A form for registration :
+        consist of 3 inputFields 
+    -->
+      <h1>Registration </h1>
+       <form  id="reg-form">
+           <div>
+            <input type="text" id="username" placeholder="username">
+           </div>
+           <br>
+         <div>
+            <input type="password" id="password" placeholder="password">
+         </div>
+         <br>
+           <input type="submit" value="Submit">
+
+       </form>
+
+       <!--
+           creating a java script function to make submit button on .
+           and the pass it as a json 
+       -->
+       <script  >
+             const form = document.getElementById('reg-form')
+             form.addEventListener('submit',registerUser)
+
+             async function registerUser ( event ){
+                 event.preventDefault()
+                 const username = document.getElementById('username').value
+                 const password = document.getElementById('password').value
+             
+             //pass it along JSON code 
+              const  result = await fetch('/api/register', {
+                 method :'POST' ,
+                 headers : {
+                     'Content-Type' :'application/json'
+                 },
+                 body :JSON.stringify({
+                   username,
+                     password
+                 })
+ 
+             }).then((res)=> res.json())
+
+                  if (result.status === 'ok'){
+                      //everything went fine 
+                      alert ('sucessful') 
+                  }else{
+                     alert(result.error) 
+                  }
+
+
+            }
+       </script>
+</body>
+</html>
